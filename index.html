@@ -1,21 +1,6 @@
 <html data-source-loc="app/root.tsx:71:5" lang="en"><head data-source-loc="app/root.tsx:72:7"><meta data-source-loc="app/root.tsx:73:9" charset="utf-8"><meta data-source-loc="app/root.tsx:74:9" name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap">
 <style>
-.ls-preview-banner {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 999999;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 16px 24px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
-}
+
 .ls-picker-overlay {
   position: fixed;
   pointer-events: none;
@@ -77,23 +62,7 @@
     }
   } catch (__e) {}
 
-  // Show preview banner if not in iframe. Agency-plan customers preview on
-  // *.agcy.dev (see ReactNavbar.tsx isAgencyPlan base-domain pick) and share
-  // those URLs with their clients, so suppress the banner on agcy.dev.
-  if (window.self === window.top && !/.agcy.dev$/i.test(window.location.hostname)) {
-    function ensureBanner() {
-      if (!document.body) return;
-      if (document.querySelector('.ls-preview-banner')) return;
-      var banner = document.createElement('div');
-      banner.className = 'ls-preview-banner';
-      banner.textContent = 'This is a preview. Publish your website to make it live on your own domain.';
-      document.body.appendChild(banner);
-    }
-    if (document.body) ensureBanner();
-    document.addEventListener('DOMContentLoaded', ensureBanner);
-    // Re-add banner if React/Vite removes it
-    new MutationObserver(ensureBanner).observe(document.documentElement, { childList: true, subtree: true });
-  }
+  if (window.self === window.top) {
   // Console log capture: continuously tail to /__console so the sandbox-side
   // .browser-log file approximates a live tail rather than a flush-on-trigger
   // snapshot. The sandbox agent's system prompt hints .browser-log as a read
